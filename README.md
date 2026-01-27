@@ -90,7 +90,7 @@ https://docs.google.com/document/d/1gSsfs96pag5IdlHf_3TUngOn9RLWpy8zHs_kwGrAUrE/
 https://www.canva.com/design/DAG_eBDvh-c/2XgKlmOOL1S2hl2IlMm5pA/edit
 
 - 🎥 **Vídeos informativos e links de referência (base de pesquisa)**  
-Centralizar todos os vídeos e materiais de estudo no Trello ou Docs conforme combinado pela equipe.
+https://www.canva.com/design/DAG_eBDvh-c/2XgKlmOOL1S2hl2IlMm5pA/edit?utm_content=DAG_eBDvh-c
 
 ---
 
