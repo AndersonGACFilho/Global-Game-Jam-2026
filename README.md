@@ -53,7 +53,8 @@ Ferramentas adicionais:
 - Aseprite  
 - Blender  
 - FMOD  
-- Canva  
+- Canva
+- BeepBox — https://www.beepbox.co/
 
 ---
 
