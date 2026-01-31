@@ -325,8 +325,21 @@ public class VampireFSM : MonoBehaviour
     private IEnumerator SearchRoutine()
     {
         float t = 0f;
+        // look around at LKP for searchDuration
+        Quaternion initialRotation = transform.rotation;
+        bool toRight = true;
+        float lookInterval = 0.5f;
+        float lookTimer = 0f;
         while (t < searchDuration)
         {
+            lookTimer += Time.deltaTime;
+            if (lookTimer >= lookInterval)
+            {
+                lookTimer = 0f;
+                float angleOffset = toRight ? 45f : -45f;
+                entity.SetTargetRotation(initialRotation.eulerAngles.z + angleOffset);
+                toRight = !toRight;
+            }
             t += Time.deltaTime;
             yield return null;
         }

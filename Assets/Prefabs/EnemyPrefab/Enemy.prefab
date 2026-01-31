@@ -429,8 +429,8 @@ MonoBehaviour:
   fovForward: {fileID: 0}
   playerStateManager: {fileID: 0}
   viewDistance: 5
-  viewAngle: 90
-  checkInterval: 0.1
+  viewAngle: 60
+  checkInterval: 0.2
   obstacleMask:
     serializedVersion: 2
     m_Bits: 8
