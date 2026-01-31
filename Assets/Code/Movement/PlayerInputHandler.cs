@@ -3,14 +3,16 @@ using UnityEngine.InputSystem;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(PlayerInteractor))]
 public class PlayerInputHandler : MonoBehaviour
 {
     public Vector2 Move { get; private set; }
-    public bool InteractPressed { get; private set; }
 
-    private void LateUpdate()
+    private PlayerInteractor _interactor;
+
+    private void Awake()
     {
-        InteractPressed = false;
+        _interactor = GetComponent<PlayerInteractor>();
     }
 
     public void OnMove(InputValue value)
@@ -20,6 +22,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void OnInteract(InputValue value)
     {
-        if (value.isPressed) InteractPressed = true;
+        if (value.isPressed)
+            _interactor.TryInteract();
     }
 }
