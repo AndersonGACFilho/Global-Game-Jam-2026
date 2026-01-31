@@ -5,12 +5,13 @@ using UnityEngine;
 public class ItemBehavior : MonoBehaviour, IInteractable
 {
     [Header("Item")]
-    [SerializeField] private string itemName = "Item";
-    [SerializeField] private string prompt = "Press [E] to pick up";
+    [SerializeField] protected string itemName = "Item";
+    [SerializeField] protected string prompt = "Press [E] to pick up";
+    [SerializeField] protected bool destroyOnInteract = true;
 
     [Header("Outline")]
-    [SerializeField] private Color normalColor = Color.yellow; 
-    [SerializeField] private Color highlightColor = Color.cyan; 
+    [SerializeField] private Color normalColor = Color.yellow;
+    [SerializeField] private Color highlightColor = Color.cyan;
     [SerializeField, Range(1.01f, 1.35f)] private float outlineScale = 1.12f;
 
     private SpriteRenderer _main;
@@ -20,10 +21,12 @@ public class ItemBehavior : MonoBehaviour, IInteractable
     private bool _highlighted;
 
     public Transform Transform => transform;
-    public string DisplayName => itemName;
-    public string Prompt => prompt;
 
-    private void Awake()
+    // ✅ virtual so NoteBehaviour can override
+    public virtual string DisplayName => itemName;
+    public virtual string Prompt => prompt;
+
+    protected virtual void Awake()
     {
         var col = GetComponent<Collider2D>();
         col.isTrigger = true;
@@ -77,13 +80,14 @@ public class ItemBehavior : MonoBehaviour, IInteractable
             _outline.color = _highlighted ? highlightColor : normalColor;
     }
 
-    public void Interact(GameObject interactor)
+    // ✅ virtual so NoteBehaviour can override
+    public virtual void Interact(GameObject interactor)
     {
-        Debug.Log($"Picked up: {itemName}");
-        Destroy(gameObject);
+        Debug.Log($"Picked up: {DisplayName}");
+        if (destroyOnInteract) Destroy(gameObject);
     }
 
-    private void LateUpdate()
+    protected virtual void LateUpdate()
     {
         if (_outline != null && _main != null && _outline.sprite != _main.sprite)
             _outline.sprite = _main.sprite;

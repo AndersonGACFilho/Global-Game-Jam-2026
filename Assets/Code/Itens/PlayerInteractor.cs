@@ -59,11 +59,12 @@ public class PlayerInteractor : MonoBehaviour
             if (interactionText != null)
                 interactionText.text = "";
         }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Item")) return;
+        if (!other.CompareTag("Item") && !other.CompareTag("Note")) return;
 
         var it = other.GetComponentInParent<IInteractable>();
         if (it == null) return;
@@ -75,7 +76,7 @@ public class PlayerInteractor : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (!other.CompareTag("Item")) return;
+        if (!other.CompareTag("Item") && !other.CompareTag("Note")) return;
 
         var it = other.GetComponentInParent<IInteractable>();
         if (it == null) return;
