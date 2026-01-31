@@ -1,0 +1,58 @@
+using TMPro;
+using UnityEngine;
+
+public class NoteUIScreen : MonoBehaviour
+{
+    public static NoteUIScreen Instance { get; private set; }
+
+    [Header("UI Refs")] 
+    [SerializeField] private GameObject root;
+    [SerializeField] private TextMeshProUGUI titleText;
+    [SerializeField] private TextMeshProUGUI bodyText;
+
+    private float _prevTimeScale = 1f;
+
+    public bool IsOpen => root != null && root.activeSelf;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
+        if (root != null)
+            root.SetActive(false);
+    }
+
+    public void Open(string title, string body)
+    {
+        Debug.Log("Opening note UI");
+        if (root == null) return;
+
+        titleText.text = title ?? "";
+        bodyText.text  = body ?? "";
+        Debug.Log("Opening note UI");
+
+        root.SetActive(true);
+        root.active = true;
+        Debug.Log($"root activeSelf={root.activeSelf} activeInHierarchy={root.activeInHierarchy}");
+
+        var canvas = root.GetComponentInParent<Canvas>(true);
+        Debug.Log(canvas == null ? "NO CANVAS FOUND ABOVE ROOT" : $"Canvas: {canvas.name} mode={canvas.renderMode} enabled={canvas.enabled} order={canvas.sortingOrder}");
+        
+        _prevTimeScale = Time.timeScale;
+        Time.timeScale = 0f;
+        Debug.Log("Time.timeScale set to 0");
+    }
+
+    public void Close()
+    {
+        if (root == null) return;
+
+        root.SetActive(false);
+        Time.timeScale = _prevTimeScale <= 0f ? 1f : _prevTimeScale;
+    }
+}
