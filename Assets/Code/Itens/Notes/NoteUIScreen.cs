@@ -29,23 +29,15 @@ public class NoteUIScreen : MonoBehaviour
 
     public void Open(string title, string body)
     {
-        Debug.Log("Opening note UI");
         if (root == null) return;
 
         titleText.text = title ?? "";
         bodyText.text  = body ?? "";
-        Debug.Log("Opening note UI");
 
         root.SetActive(true);
-        root.active = true;
-        Debug.Log($"root activeSelf={root.activeSelf} activeInHierarchy={root.activeInHierarchy}");
-
-        var canvas = root.GetComponentInParent<Canvas>(true);
-        Debug.Log(canvas == null ? "NO CANVAS FOUND ABOVE ROOT" : $"Canvas: {canvas.name} mode={canvas.renderMode} enabled={canvas.enabled} order={canvas.sortingOrder}");
         
         _prevTimeScale = Time.timeScale;
         Time.timeScale = 0f;
-        Debug.Log("Time.timeScale set to 0");
     }
 
     public void Close()

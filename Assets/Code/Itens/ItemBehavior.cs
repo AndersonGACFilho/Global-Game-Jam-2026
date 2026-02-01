@@ -6,7 +6,7 @@ public class ItemBehavior : MonoBehaviour, IInteractable
 {
     [Header("Item")]
     [SerializeField] protected string itemName = "Item";
-    [SerializeField] protected string prompt = "Press [E] to pick up";
+    [SerializeField] protected string prompt = "Precione [E] para interagir";
     [SerializeField] protected bool destroyOnInteract = true;
 
     [Header("Outline")]
@@ -80,7 +80,6 @@ public class ItemBehavior : MonoBehaviour, IInteractable
             _outline.color = _highlighted ? highlightColor : normalColor;
     }
 
-    // ✅ virtual so NoteBehaviour can override
     public virtual void Interact(GameObject interactor)
     {
         Debug.Log($"Picked up: {DisplayName}");

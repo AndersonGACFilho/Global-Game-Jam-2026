@@ -129,12 +129,12 @@ TextureImporter:
       name: base costas elizabet_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 152
         y: 341
-        width: 624
+        width: 472
         height: 1650
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: aa8fd6c510ada6049bd297ca768eb0e2
     internalID: 0
     vertices: []
     indices: 

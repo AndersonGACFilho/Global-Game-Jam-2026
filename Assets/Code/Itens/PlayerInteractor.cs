@@ -38,50 +38,56 @@ public class PlayerInteractor : MonoBehaviour
             if (d < bestDist) { bestDist = d; best = it; }
         }
 
-        if (best == _closest) return;
+        if (best == _closest)
+        {
+            RefreshUI();
+            return;
+        }
 
         if (_closest != null)
-        {
             _closest.SetHighlighted(false);
-        }
 
         _closest = best;
 
         if (_closest != null)
-        {
             _closest.SetHighlighted(true);
 
-            if (interactionText != null)
-                interactionText.text = $"{_closest.Prompt} \"{_closest.DisplayName}\"";
+        RefreshUI();
+    }
+
+    private void RefreshUI()
+    {
+        if (interactionText == null) return;
+
+        if (_closest != null)
+        {
+            var p = _closest.Prompt ?? "";
+            var n = _closest.DisplayName ?? "";
+
+            interactionText.text = string.IsNullOrEmpty(p) ? "" : $"{p} \"{n}\"";
         }
         else
         {
-            if (interactionText != null)
-                interactionText.text = "";
+            interactionText.text = "";
         }
-        
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Item") && !other.CompareTag("Note")) return;
-
         var it = other.GetComponentInParent<IInteractable>();
         if (it == null) return;
 
         _inRange.Add(it);
-        it.SetInRange(true);        
-        UpdateClosest();            
+        it.SetInRange(true);
+        UpdateClosest();
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (!other.CompareTag("Item") && !other.CompareTag("Note")) return;
-
         var it = other.GetComponentInParent<IInteractable>();
         if (it == null) return;
 
-        it.SetInRange(false);       
+        it.SetInRange(false);
         _inRange.Remove(it);
 
         if (it == _closest)

@@ -47,6 +47,10 @@ public class VampireFSM : MonoBehaviour
     private Coroutine _alertRoutine;
     private Coroutine _searchRoutine;
 
+    private bool _hasForcedSearchPoint = false;
+    private Vector2 _forcedSearchPoint;
+    private float _forcedSearchDuration = -1f;
+    
     private bool _wasSeeingPlayer = false;
     private bool _isRegisteredAsChaser = false;
 
@@ -146,7 +150,16 @@ public class VampireFSM : MonoBehaviour
             case State.Search:
                 entity.maxVelocity = searchSpeed;
                 RegisterAsChaser(false);
-                StartSearch();
+
+                if (_hasForcedSearchPoint)
+                {
+                    StartSearchAt(_forcedSearchPoint, _forcedSearchDuration);
+                    _hasForcedSearchPoint = false;
+                }
+                else
+                {
+                    StartSearchAt(vision.LastSeenPlayerPosition, -1f);
+                }
                 break;
 
             case State.ChaseHard:
@@ -294,14 +307,17 @@ public class VampireFSM : MonoBehaviour
         }
     }
 
-    private void StartSearch()
+    private void StartSearchAt(Vector2 pos, float durationOverride)
     {
-        _lastKnownPos = vision.LastSeenPlayerPosition;
+        _lastKnownPos = pos;
         SpawnLkpMarker(_lastKnownPos);
 
         if (_searchRoutine != null) StopCoroutine(_searchRoutine);
-        _searchRoutine = StartCoroutine(SearchRoutine());
+
+        float dur = (durationOverride > 0f) ? durationOverride : searchDuration;
+        _searchRoutine = StartCoroutine(SearchRoutine(dur));
     }
+
 
     private void TickSearchMoveToLkp()
     {
@@ -322,15 +338,15 @@ public class VampireFSM : MonoBehaviour
         movement.SetMoveIntent(moveDirection);
     }
 
-    private IEnumerator SearchRoutine()
+    private IEnumerator SearchRoutine(float duration)
     {
         float t = 0f;
-        // look around at LKP for searchDuration
         Quaternion initialRotation = transform.rotation;
         bool toRight = true;
         float lookInterval = 0.5f;
         float lookTimer = 0f;
-        while (t < searchDuration)
+
+        while (t < duration)
         {
             lookTimer += Time.deltaTime;
             if (lookTimer >= lookInterval)
@@ -340,12 +356,14 @@ public class VampireFSM : MonoBehaviour
                 entity.SetTargetRotation(initialRotation.eulerAngles.z + angleOffset);
                 toRight = !toRight;
             }
+
             t += Time.deltaTime;
             yield return null;
         }
 
         EnterState(State.Patrol);
     }
+
 
     private bool ShouldTriggerChaseFromSearch()
     {
@@ -376,5 +394,18 @@ public class VampireFSM : MonoBehaviour
             player.UnregisterVampireSeeing(VampireId);
             _wasSeeingPlayer = false;
         }
+    }
+    
+    public bool TryInvestigatePoint(Vector2 point, float duration = -1f, bool force = false)
+    {
+        if (!force && (currentState == State.Chase || currentState == State.ChaseHard))
+            return false;
+
+        _forcedSearchPoint = point;
+        _forcedSearchDuration = duration;
+        _hasForcedSearchPoint = true;
+
+        EnterState(State.Search);
+        return true;
     }
 }
