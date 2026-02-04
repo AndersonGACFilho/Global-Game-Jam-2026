@@ -14,6 +14,9 @@ public class EntityBehavior : MonoBehaviour
     [Header("Components")]
     public Collider2D entityWorldCollider;
     public Collider2D entityInteractionCollider;
+
+    [Header("Visuals (optional)")]
+    public Transform spriteRoot;
     
     
     [Header("Movement Stats")]
@@ -30,6 +33,10 @@ public class EntityBehavior : MonoBehaviour
     {
         entityWorldCollider = transform.Find("WorldCollider")?.GetComponent<Collider2D>();
         entityInteractionCollider = transform.Find("InteractionCollider")?.GetComponent<Collider2D>();
+        if (spriteRoot == null)
+        {
+            spriteRoot = transform.Find("Visual");
+        }
         
         
         if (entityWorldCollider != null && entityInteractionCollider != null) return;
@@ -64,5 +71,15 @@ public class EntityBehavior : MonoBehaviour
     public void SetTargetRotation(float angle)
     {
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
+    }
+
+    public void SetFacingDirection(float direction)
+    {
+        if (spriteRoot == null) return;
+        if (Mathf.Approximately(direction, 0f)) return;
+
+        var scale = spriteRoot.localScale;
+        scale.x = Mathf.Abs(scale.x) * Mathf.Sign(direction);
+        spriteRoot.localScale = scale;
     }
 }
