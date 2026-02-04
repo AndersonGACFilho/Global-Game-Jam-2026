@@ -7,6 +7,9 @@ using UnityEngine.InputSystem;
 public class PlayerInputHandler : MonoBehaviour
 {
     public Vector2 Move { get; private set; }
+    public bool JumpPressed { get; private set; }
+    public bool DashPressed { get; private set; }
+    public bool AttackPressed { get; private set; }
 
     private PlayerInteractor _interactor;
 
@@ -24,6 +27,30 @@ public class PlayerInputHandler : MonoBehaviour
         }
 
         Move = value.Get<Vector2>();
+    }
+
+    public void OnJump(InputValue value)
+    {
+        if (!value.isPressed) return;
+        if (NoteUIScreen.Instance != null && NoteUIScreen.Instance.IsOpen) return;
+
+        JumpPressed = true;
+    }
+
+    public void OnDash(InputValue value)
+    {
+        if (!value.isPressed) return;
+        if (NoteUIScreen.Instance != null && NoteUIScreen.Instance.IsOpen) return;
+
+        DashPressed = true;
+    }
+
+    public void OnAttack(InputValue value)
+    {
+        if (!value.isPressed) return;
+        if (NoteUIScreen.Instance != null && NoteUIScreen.Instance.IsOpen) return;
+
+        AttackPressed = true;
     }
 
     public void OnInteract(InputValue value)
@@ -45,5 +72,26 @@ public class PlayerInputHandler : MonoBehaviour
 
         if (NoteUIScreen.Instance != null && NoteUIScreen.Instance.IsOpen)
             NoteUIScreen.Instance.Close();
+    }
+
+    public bool ConsumeJumpPressed()
+    {
+        if (!JumpPressed) return false;
+        JumpPressed = false;
+        return true;
+    }
+
+    public bool ConsumeDashPressed()
+    {
+        if (!DashPressed) return false;
+        DashPressed = false;
+        return true;
+    }
+
+    public bool ConsumeAttackPressed()
+    {
+        if (!AttackPressed) return false;
+        AttackPressed = false;
+        return true;
     }
 }

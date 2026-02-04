@@ -203,12 +203,14 @@ public class VampireFSM : MonoBehaviour
 
         Transform target = patrolPoints[_patrolIndex];
         Vector2 to = (Vector2)target.position - (Vector2)transform.position;
+        to = AdjustDirectionForMode(to);
         
         if (to.magnitude <= arriveDistance)
         {
             _patrolIndex = (_patrolIndex + 1) % patrolPoints.Length;
             target = patrolPoints[_patrolIndex];
             to = (Vector2)target.position - (Vector2)transform.position;
+            to = AdjustDirectionForMode(to);
         }
 
         Vector2 moveDirection = to.normalized;
@@ -220,11 +222,7 @@ public class VampireFSM : MonoBehaviour
         }
 
         // Set rotation
-        if (moveDirection.magnitude > 0.1f)
-        {
-            float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg - 90f;
-            entity.SetTargetRotation(angle);
-        }
+        ApplyFacingForMode(moveDirection);
 
         movement.SetMoveIntent(moveDirection);
     }
@@ -262,6 +260,7 @@ public class VampireFSM : MonoBehaviour
     private void TickChase(bool hard)
     {
         Vector2 to = vision.LastSeenPlayerPosition - (Vector2)transform.position;
+        to = AdjustDirectionForMode(to);
         Vector2 moveDirection = to.normalized;
         
         if (obstacleAvoidance != null)
@@ -271,11 +270,7 @@ public class VampireFSM : MonoBehaviour
 
         movement.SetMoveIntent(moveDirection);
         
-        if (to.magnitude > 0.1f)
-        {
-            float angle = Mathf.Atan2(to.y, to.x) * Mathf.Rad2Deg - 90f;
-            entity.SetTargetRotation(angle);
-        }
+        ApplyFacingForMode(moveDirection);
 
         if (hard) return;
 
@@ -326,6 +321,7 @@ public class VampireFSM : MonoBehaviour
     private void TickSearchMoveToLkp()
     {
         Vector2 to = _lastKnownPos - (Vector2)transform.position;
+        to = AdjustDirectionForMode(to);
         if (to.magnitude <= arriveDistance)
         {
             movement.SetMoveIntent(Vector2.zero);
@@ -340,6 +336,29 @@ public class VampireFSM : MonoBehaviour
         }
 
         movement.SetMoveIntent(moveDirection);
+    }
+
+    private Vector2 AdjustDirectionForMode(Vector2 input)
+    {
+        if (movement != null && movement.movementMode == MovementBehavior.MovementMode.SideScroller)
+        {
+            return new Vector2(input.x, 0f);
+        }
+
+        return input;
+    }
+
+    private void ApplyFacingForMode(Vector2 moveDirection)
+    {
+        if (moveDirection.magnitude <= 0.1f) return;
+
+        if (movement != null && movement.movementMode == MovementBehavior.MovementMode.SideScroller)
+        {
+            return;
+        }
+
+        float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg - 90f;
+        entity.SetTargetRotation(angle);
     }
 
     private IEnumerator SearchRoutine(float duration)
