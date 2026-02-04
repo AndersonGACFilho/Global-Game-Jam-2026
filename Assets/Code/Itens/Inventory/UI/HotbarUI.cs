@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HotbarUI : MonoBehaviour
 {
@@ -7,6 +9,7 @@ public class HotbarUI : MonoBehaviour
     [SerializeField] private PlayerInventory inventory;
     [SerializeField] private HotbarSlotUI slotPrefab;
     [SerializeField] private Transform slotsParent;
+    [SerializeField] private TextMeshProUGUI currentItemText;
 
     private readonly List<HotbarSlotUI> _slots = new();
 
@@ -56,10 +59,9 @@ public class HotbarUI : MonoBehaviour
     {
         if (inventory == null) inventory = PlayerInventory.Instance;
         if (inventory == null) return;
-
         BuildIfNeeded();
 
         for (int i = 0; i < _slots.Count; i++)
-            _slots[i].Set(inventory, i);
+            _slots[i].Set(inventory, i, currentItemText);
     }
 }

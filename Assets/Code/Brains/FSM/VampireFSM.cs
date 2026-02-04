@@ -40,6 +40,9 @@ public class VampireFSM : MonoBehaviour
 
     [Header("Debug")]
     public State currentState = State.Patrol;
+    
+    [Header("Behavior")]
+    public bool isAggressive = true;
 
     private int _patrolIndex = 0;
     private Vector2 _lastKnownPos;
@@ -228,6 +231,7 @@ public class VampireFSM : MonoBehaviour
 
     private bool ShouldTriggerAlert()
     {
+        if (!isAggressive) return false;
         if (!vision.IsSeeingPlayer) return false;
         var pf = player.flags;
         if (pf == null) return false;
@@ -243,7 +247,7 @@ public class VampireFSM : MonoBehaviour
             yield return null;
         }
 
-        if (vision.IsSeeingPlayer && player.flags != null && player.flags.CanTriggerDetection)
+        if (vision.IsSeeingPlayer && player.flags != null && player.flags.CanTriggerDetection && isAggressive)
             EnterState(State.Chase);
         else
             EnterState(State.Patrol);

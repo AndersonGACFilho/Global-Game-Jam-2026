@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -28,6 +29,10 @@ public class PlayerInventory : MonoBehaviour
     [Header("Slots (Hotbar)")]
     [SerializeField] private int maxSlots = 5;
     [SerializeField] private Slot[] slots;
+    
+    [Header("Keys (not shown in UI)")]
+    [SerializeField]private readonly Dictionary<string, int> _keys = new Dictionary<string, int>();
+
 
     [Header("Selection")]
     [SerializeField] private int selectedIndex = 0;
@@ -77,6 +82,8 @@ public class PlayerInventory : MonoBehaviour
     public bool CanAdd(InventoryItemDefinition def, int amount = 1)
     {
         if (def == null || amount <= 0) return false;
+        
+        if (def is KeyItemDefinition) return true;
 
         if (def.stackable)
         {
@@ -97,46 +104,57 @@ public class PlayerInventory : MonoBehaviour
 
     public bool TryAdd(InventoryItemDefinition def, int amount = 1)
     {
+        if (def == null || amount <= 0) return false;
+
+        // Keys go to the keyring (no slot cost)
+        if (def is KeyItemDefinition keyDef)
+        {
+            AddKey(keyDef.keyId, amount);
+            return true;
+        }
+
         if (!CanAdd(def, amount)) return false;
 
         if (def.stackable)
         {
             for (int i = 0; i < slots.Length; i++)
             {
-                var s = slots[i];
-                if (s.IsEmpty) continue;
+                if (slots[i].IsEmpty) continue;
+                if (slots[i].item != def) continue;
+                if (slots[i].count >= def.maxStack) continue;
 
-                if (s.item == def && s.count < def.maxStack)
+                int canAdd = def.maxStack - slots[i].count;
+                int toAdd = Mathf.Min(canAdd, amount);
+                slots[i].count += toAdd;
+                amount -= toAdd;
+
+                if (amount <= 0)
                 {
-                    int add = Mathf.Min(amount, def.maxStack - s.count);
-                    s.count += add;
-                    amount -= add;
-
-                    if (amount <= 0)
-                    {
-                        OnChanged?.Invoke();
-                        return true;
-                    }
+                    OnChanged?.Invoke();
+                    return true;
                 }
             }
         }
 
-        for (int i = 0; i < slots.Length && amount > 0; i++)
+        for (int i = 0; i < slots.Length; i++)
         {
-            var s = slots[i];
-            if (!s.IsEmpty) continue;
+            if (!slots[i].IsEmpty) continue;
 
-            s.item = def;
-            s.count = def.stackable ? Mathf.Min(amount, def.maxStack) : 1;
-            s.equipped = false;
+            slots[i].item = def;
+            slots[i].count = Mathf.Min(amount, def.stackable ? def.maxStack : 1);
+            slots[i].durability = def.usesDurability ? def.maxDurability : 0f;
 
-            s.durability = def.usesDurability ? def.maxDurability : 0f;
+            amount -= slots[i].count;
 
-            amount -= s.count;
+            if (amount <= 0)
+            {
+                OnChanged?.Invoke();
+                return true;
+            }
         }
 
         OnChanged?.Invoke();
-        return true;
+        return amount <= 0;
     }
 
     public bool UseSelected()
@@ -230,16 +248,37 @@ public class PlayerInventory : MonoBehaviour
     public bool HasKey(string keyId)
     {
         if (string.IsNullOrEmpty(keyId)) return true;
+        return _keys.TryGetValue(keyId, out var c) && c > 0;
+    }
 
-        for (int i = 0; i < slots.Length; i++)
-        {
-            var s = slots[i];
-            if (s.IsEmpty) continue;
+    public int GetKeyCount(string keyId)
+    {
+        if (string.IsNullOrEmpty(keyId)) return 0;
+        return _keys.TryGetValue(keyId, out var c) ? c : 0;
+    }
 
-            if (s.item is KeyItemDefinition k && k.keyId == keyId && s.count > 0)
-                return true;
-        }
-        return false;
+    public void AddKey(string keyId, int amount = 1)
+    {
+        if (string.IsNullOrEmpty(keyId) || amount <= 0) return;
+
+        if (_keys.ContainsKey(keyId)) _keys[keyId] += amount;
+        else _keys[keyId] = amount;
+
+        OnChanged?.Invoke();
+    }
+
+    public bool TryConsumeKey(string keyId, int amount = 1)
+    {
+        if (string.IsNullOrEmpty(keyId) || amount <= 0) return false;
+
+        if (!_keys.TryGetValue(keyId, out var cur) || cur <= 0) return false;
+
+        cur -= amount;
+        if (cur <= 0) _keys.Remove(keyId);
+        else _keys[keyId] = cur;
+
+        OnChanged?.Invoke();
+        return true;
     }
 
     public void RemoveAt(int index)

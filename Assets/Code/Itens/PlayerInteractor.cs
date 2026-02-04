@@ -6,24 +6,39 @@ public class PlayerInteractor : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI interactionText;
+    
+    private PlayerStateFlags _flags;
 
     private readonly HashSet<IInteractable> _inRange = new();
     private IInteractable _closest;
+    private IInteractable _forced;
 
     private void Update()
     {
         UpdateClosest();
     }
-
+    
+    private void Awake()
+    {
+        _flags = GetComponentInParent<PlayerStateFlags>();
+    }
+    
     public void TryInteract()
     {
+        if (_flags != null && !_flags.CanInteract) return;
+
         UpdateClosest();
         if (_closest == null) return;
 
         _closest.Interact(gameObject);
         UpdateClosest();
     }
-
+    
+    public void ForceInteractable(IInteractable target) 
+    {
+        _forced = target;
+    }
+    
     private void UpdateClosest()
     {
         _inRange.RemoveWhere(i => i == null || i.Transform == null);

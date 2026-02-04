@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -22,6 +23,10 @@ public class DoorBehavior : MonoBehaviour, IInteractable
     [Header("Highlight")]
     [SerializeField] private Color normalColor = Color.white;
     [SerializeField] private Color highlightColor = Color.cyan;
+    
+    [Header("Win Condition")]
+    [SerializeField] private bool winOnOpen = true;
+    [SerializeField] private float winDelayRealtime = 0.1f;
 
     private bool _isOpen;
     private bool _inRange;
@@ -85,10 +90,29 @@ public class DoorBehavior : MonoBehaviour, IInteractable
             Debug.Log($"Door locked: missing keyId='{KeyId}'");
             return;
         }
-
         SetOpen(true);
-    }
 
+        if (winOnOpen)
+        {
+            StartCoroutine(WinAfterDelay());
+        }
+    }
+    
+    private IEnumerator WinAfterDelay()
+    {
+        float t = 0f;
+        while (t < winDelayRealtime)
+        {
+            t += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        if (GameWinController.Instance != null)
+            GameWinController.Instance.Win();
+        else
+            Debug.LogWarning("GameWinController não encontrado na cena.");
+    }
+    
     private void SetOpen(bool open)
     {
         _isOpen = open;

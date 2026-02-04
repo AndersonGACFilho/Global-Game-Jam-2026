@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d2352cbaf354941a4d97f945ac774be, type: 3}
+  m_Name: Candlestick Item
+  m_EditorClassIdentifier: Assembly-CSharp::CandlestickItemDefinition
+  itemId: item_id
+  displayName: Candlestick
+  description: 
+  icon: {fileID: -8855562076019046744, guid: 1707b2bdb9d90e141b352f8347f42ece, type: 3}
+  stackable: 1
+  maxStack: 1
+  usesDurability: 0
+  maxDurability: 1
+  equippable: 0
+  equipGroup: 
+  throwDistance: 6
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  lureRadius: 8
+  investigateDuration: 4
+  vampireMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  forceOverrideChase: 0
+  lurePrefab: {fileID: 0}
+  lureLifetime: 2.5

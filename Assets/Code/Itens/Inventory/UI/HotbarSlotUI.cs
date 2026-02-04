@@ -7,12 +7,12 @@ public class HotbarSlotUI : MonoBehaviour
     [Header("Refs")]
     [SerializeField] private Image iconImage;
     [SerializeField] private TextMeshProUGUI countText;
-    [SerializeField] private Image durabilityFill;     // Filled image
-    [SerializeField] private GameObject durabilityRoot; // BG+Fill parent
+    [SerializeField] private Image durabilityFill;     
+    [SerializeField] private GameObject durabilityRoot;
     [SerializeField] private GameObject selectedFrame;
     [SerializeField] private GameObject equippedMark;
 
-    public void Set(PlayerInventory inv, int index)
+    public void Set(PlayerInventory inv, int index, TextMeshProUGUI currentItemText)
     {
         if (inv == null || inv.Slots == null || index < 0 || index >= inv.Slots.Length)
         {
@@ -28,6 +28,7 @@ public class HotbarSlotUI : MonoBehaviour
         if (slot == null || slot.IsEmpty || slot.item == null)
         {
             SetEmpty(selected);
+            currentItemText?.SetText("");
             return;
         }
 
@@ -59,6 +60,12 @@ public class HotbarSlotUI : MonoBehaviour
         // Equipped marker
         if (equippedMark != null)
             equippedMark.SetActive(slot.equipped);
+        
+        if (currentItemText != null && selected)
+        {
+            currentItemText.text = slot.item.displayName;
+        }
+        
     }
 
     private void SetEmpty(bool selected)

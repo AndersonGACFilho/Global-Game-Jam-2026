@@ -26,7 +26,7 @@ public class VampireVisionSensor : MonoBehaviour
 
     private float _nextCheckTime;
 
-    private void Awake()
+    private void Start()
     {
         if (fovOrigin == null) fovOrigin = transform;
         if (fovForward == null) fovForward = transform;
@@ -54,8 +54,11 @@ public class VampireVisionSensor : MonoBehaviour
         _playerEntity = player.GetComponent<EntityBehavior>();
         if (_playerEntity == null)
         {
-            Debug.LogError($"VampireVisionSensor: EntityBehavior not found on Player!", this);
-            return;
+            _playerEntity = player.GetComponentInChildren<EntityBehavior>();
+            if (_playerEntity == null)
+            {
+                Debug.LogError($"VampireVisionSensor: EntityBehavior not found on Player!", this);
+            }
         }
         
         if (_playerEntity.entityInteractionCollider == null)

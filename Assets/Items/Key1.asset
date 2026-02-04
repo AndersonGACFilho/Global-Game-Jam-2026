@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcd55d2ae22149a6bed152eb65798fdc, type: 3}
   m_Name: Key1
   m_EditorClassIdentifier: Assembly-CSharp::KeyItemDefinition
-  itemId: 3424323
-  displayName: Test
+  itemId: 1
+  displayName: Key 1
   description: 
-  icon: {fileID: 0}
+  icon: {fileID: 4617620551454551896, guid: adcbd8e90045214418753625e2167deb, type: 3}
   stackable: 0
   maxStack: 1
   usesDurability: 0

@@ -8,6 +8,11 @@ public class MovementBehavior : MonoBehaviour
     [Header("Components")]
     public Rigidbody2D entityRigidbody;
     public EntityBehavior entityBehavior;
+    
+    [Header("Visual (optional)")]
+    public TopDownWalkBob walkBob;
+    public TopDownFacingSprite facingSprite;
+    public AnimatorFacingDriver facingAnimator;
 
     private Vector2 _desiredDirection = Vector2.zero;
     
@@ -15,6 +20,11 @@ public class MovementBehavior : MonoBehaviour
     {
         entityRigidbody = GetComponent<Rigidbody2D>();
         entityBehavior = GetComponent<EntityBehavior>();
+        
+        walkBob        = GetComponentInChildren<TopDownWalkBob>(true);
+        facingSprite   = GetComponentInChildren<TopDownFacingSprite>(true);
+        facingAnimator = GetComponentInChildren<AnimatorFacingDriver>(true);
+
         
         if (entityRigidbody == null)
         {
@@ -38,6 +48,9 @@ public class MovementBehavior : MonoBehaviour
     public void SetMoveIntent(Vector2 direction, float? speed = null)
     {
         _desiredDirection = direction;
+        if (walkBob != null) walkBob.SetMoveIntent(direction);
+        if (facingSprite != null) facingSprite.ApplyFacing(direction);
+        if (facingAnimator != null) facingAnimator.ApplyFacing(direction);
     }
 
     private void FixedUpdate()
