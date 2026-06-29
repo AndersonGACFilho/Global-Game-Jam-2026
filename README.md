@@ -2,9 +2,9 @@
 
 Project originally created during Global Game Jam 2026, under the theme MASK.
 
-«Status: Post-Jam Solo Remake (Work in Progress)»
+«Status: Post-Jam Solo Remake — Work in Progress»
 
-Originally developed as a 2D side-scroller survival/stealth prototype during the 48-hour Global Game Jam, the project is now being completely reimagined as a retro first-person stealth horror experience, inspired by classic Doom-like games while keeping the original theme centered around masks, deception and survival.
+Originally developed as a 2D side-scroller survival/stealth prototype during the 48-hour Global Game Jam, the project is now being reimagined as a retro first-person stealth horror experience, inspired by classic Doom-like games while keeping the original theme centered around masks, deception and survival.
 
 ---
 
@@ -42,7 +42,7 @@ Unlike traditional retro FPS games, combat is not the main focus.
 
 - Global Game Jam 2026
 - Theme: Mask
-- Duration: 48 Hours
+- Duration: 48 hours
 - Engine: Unity
 - Language: C#
 - Location: Coletivo Centopeia
@@ -65,7 +65,7 @@ Rather than treating masks as cosmetic objects, the project explores them as sym
 
 Masks are both a gameplay mechanic and a narrative device.
 
-They allow the player to temporarily become "one of them".
+They allow the player to temporarily become “one of them”.
 
 ---
 
@@ -131,7 +131,7 @@ Choosing when to wear or preserve a mask becomes one of the main strategic decis
 
 👁️ Enemy AI
 
-The vampires are designed around perception rather than scripted encounters.
+The vampires are designed around perception, suspicion and planning rather than purely scripted encounters.
 
 Planned AI systems include:
 
@@ -145,6 +145,119 @@ Planned AI systems include:
 - Memory of last known player position
 
 Enemy behavior is intended to become one of the project's main technical showcases.
+
+---
+
+🧠 AI Architecture
+
+One of the main technical goals of this project is to explore game AI beyond traditional finite state machines.
+
+Enemy decision-making is planned around a hybrid AI architecture combining a macro-level Finite State Machine (FSM) with a custom Hierarchical Task Network (HTN) planner.
+
+The FSM defines the enemy's current high-level mode and selects the corresponding HTN root task. The HTN then decomposes that root task into executable primitive actions based on the current world state.
+
+Perception / Events
+↓
+Finite State Machine
+↓
+Select HTN Root Task
+↓
+HTN Planner
+↓
+Primitive Action Plan
+↓
+Plan Runner
+
+Example state-to-root-task mapping:
+
+VampireState.Social
+→ Root Task: MaintainMasquerade
+
+VampireState.Suspicious
+→ Root Task: InvestigateSuspicion
+
+VampireState.Hunting
+→ Root Task: HuntHuman
+
+VampireState.Chasing
+→ Root Task: ChaseAndKill
+
+VampireState.Returning
+→ Root Task: ReturnToPost
+
+The AI architecture is designed around:
+
+- Finite State Machine — controls the vampire's macro behavior mode.
+- HTN Planner — decomposes high-level goals into executable task plans.
+- Primitive Actions — executable low-level behaviors.
+- Perception System — field of view, line of sight and nearby awareness.
+- World State / Blackboard — shared knowledge used by the planner.
+- Memory System — stores last known player position and suspicious events.
+- Navigation System — moves enemies through the mansion.
+- Plan Runner — executes the generated primitive action sequence.
+
+Example high-level behavior structure:
+
+Maintain the Masquerade
+│
+├── Socialize
+├── Patrol
+├── Investigate Suspicious Activity
+├── Search for Intruders
+├── Hunt Human
+│   ├── Detect Target
+│   ├── Confirm Identity
+│   ├── Chase
+│   └── Kill
+│
+└── Return to Social Behavior
+
+The player's mask directly influences the AI by modifying the world state.
+
+For example:
+
+- Wearing a valid mask reduces suspicion.
+- Damaged masks increase suspicion.
+- Broken masks expose the player.
+- Running, entering restricted areas or staying too close to vampires may trigger questioning or pursuit.
+
+This architecture aims to produce believable, reactive and scalable enemy behaviors while also serving as a technical showcase for AI planning techniques used in gameplay programming.
+
+---
+
+🗣️ Future AI / Dialogue Experiments
+
+As a future experiment, the project may include an LLM-assisted interrogation system for moments when the player is wearing a mask and a vampire becomes suspicious at close range.
+
+The LLM would not control gameplay-critical decisions.
+
+Instead, it would be used as a narrative layer to generate contextual vampire dialogue, questions and social pressure.
+
+Planned direction:
+
+- LLM-generated vampire questions based on suspicion, location and player behavior.
+- Deterministic suspicion scoring handled by the game systems.
+- Fixed gameplay outcomes controlled by FSM, HTN, perception and world state.
+- Dialogue choices that can increase or reduce suspicion.
+- No LLM authority over death, detection, chase or win/loss conditions.
+
+Example flow:
+
+Vampire gets close
+↓
+Suspicion score is high
+↓
+Interrogation starts
+↓
+LLM generates contextual question
+↓
+Player chooses response
+↓
+Deterministic system updates suspicion
+↓
+AI resumes patrol, investigates further or starts chase
+
+This feature is considered post-vertical-slice scope and may be explored after the core stealth, mask and HTN systems are playable.
 
 ---
 
@@ -179,19 +292,24 @@ Gameplay
 
 AI
 
+- Macro FSM
+- HTN planner
+- Root task selection
+- Primitive task/action execution
 - Patrol
 - Investigation
 - Chase
 - Search
 - Perception
-- State Machine
 - Memory
+- Blackboard/world state
+- Plan runner
 
 Environment
 
 - Explorable mansion
-- Multiple floors
-- Secret rooms
+- Multiple rooms
+- Secret areas
 - Interactive props
 - Atmospheric lighting
 
@@ -223,9 +341,9 @@ The project targets a fixed low-resolution rendering style to reinforce its retr
 
 Planned specifications:
 
-- Internal Resolution: 320×180 (primary target)
-- Alternative Resolution: 426×240
-- Aspect Ratio: 16:9
+- Internal resolution: 320×180
+- Alternative resolution: 426×240
+- Aspect ratio: 16:9
 - Integer pixel scaling
 - Pixel-perfect presentation
 - Low-resolution rendering with modern lighting
@@ -246,6 +364,8 @@ Planned architecture:
 - Inventory System
 - Mask System
 - Vampire AI
+- Macro State Machine
+- HTN Planner
 - Suspicion System
 - Save System
 - Dialogue Trigger System
@@ -400,12 +520,16 @@ Planned milestones:
 - Mask system
 - Suspicion system
 - Vampire AI
+- Macro FSM
+- HTN planner
+- Root task selection
 - Inventory
 - Exploration mechanics
 - Environmental storytelling
 - Final chase sequence
 - Public demo
-- Steam/Itch.io release candidate
+- Future LLM-assisted interrogation experiment
+- Itch.io release candidate
 
 ---
 
