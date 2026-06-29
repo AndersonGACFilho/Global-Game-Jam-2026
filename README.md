@@ -1,256 +1,431 @@
-# 🎭 Vampires (Don't) Bite Me
+🎭 Vampires (Don't) Bite Me
 
-Project developed during **Global Game Jam 2026**, under the theme **MASK**.
+Project originally created during Global Game Jam 2026, under the theme MASK.
 
-> Status: **game jam prototype / unfinished concept**  
-> This project was started during the jam, but it was not completed within the 48-hour timeframe.
+«Status: Post-Jam Solo Remake (Work in Progress)»
 
----
-
-## 📌 Jam Information
-
-- ⏱️ Jam duration: **48 hours**
-- 📅 Official period: **January 30 to February 1, 2026**
-- 📍 Location: **Coletivo Centopeia**
-- 🎯 Theme: **Mask**
-- 🎮 Engine: **Unity**
-- 💻 Language: **C#**
+Originally developed as a 2D side-scroller survival/stealth prototype during the 48-hour Global Game Jam, the project is now being completely reimagined as a retro first-person stealth horror experience, inspired by classic Doom-like games while keeping the original theme centered around masks, deception and survival.
 
 ---
 
-## 🕹️ About the Game
+📌 Project Overview
 
-**Vampires (Don't) Bite Me** is a 2D side-scroller survival/stealth prototype where the player must survive the night inside a mansion inhabited by vampires.
+Vampires (Don't) Bite Me is a retro-inspired first-person stealth horror game where the player must survive a masquerade ball that turns into a massacre.
 
-The core idea revolves around using **masks** as a survival tool. Masks allow the player to hide their identity, deceive enemies, or avoid dangerous situations for a limited time.
+Everyone attending the event wears masks.
 
-The game concept combines room-by-room exploration, resource management, stealth, object interaction and reactive enemies.
+The protagonist leaves the ballroom for a few minutes.
 
----
+When they return...
 
-## 🎭 Theme Interpretation — Mask
+The guests are being slaughtered.
 
-Our interpretation of the theme was based on the idea that masks can represent more than just a visual object.
+The mansion has become a hunting ground.
 
-In the game concept, masks are connected to:
+The only way to survive is to deceive the vampires, hide your identity and escape before dawn.
 
-- Disguise
+The game focuses on:
+
+- Stealth
+- Exploration
 - Survival
+- Enemy perception
+- Resource management
+- Environmental storytelling
+- Psychological tension
+
+Unlike traditional retro FPS games, combat is not the main focus.
+
+---
+
+📌 Original Jam Information
+
+- Global Game Jam 2026
+- Theme: Mask
+- Duration: 48 Hours
+- Engine: Unity
+- Language: C#
+- Location: Coletivo Centopeia
+
+---
+
+🎭 Theme Interpretation
+
+The Global Game Jam theme was Mask.
+
+Rather than treating masks as cosmetic objects, the project explores them as symbols of:
+
 - Identity
-- Appearance vs. reality
+- Survival
+- Deception
+- Appearance versus reality
 - Social roles
 - Hidden intentions
-- Temporary transformation
+- Fear
 
-The mask works both as a gameplay mechanic and as a narrative element: the player must decide when it is worth hiding who they really are in order to survive.
+Masks are both a gameplay mechanic and a narrative device.
 
----
-
-## 🎮 Gameplay Concept
-
-The player explores a mansion from a side-view perspective, searching for resources while avoiding vampires.
-
-The planned core loop was:
-
-1. Explore rooms inside the mansion
-2. Collect items and masks
-3. Avoid or deceive vampires
-4. Manage the limited use of masks
-5. Survive until the end of the night
+They allow the player to temporarily become "one of them".
 
 ---
 
-## 🧩 Planned Mechanics
+🧛 Story
 
-- 2D side-scroller movement
-- Room exploration
-- Object interaction
-- Inventory system
-- Masks with durability
-- Enemies patrolling the environment
-- Player detection and chase behavior
-- Masks as temporary disguises
-- Survival-based win condition
-- Defeat condition based on being caught or killed
+The story takes place inside an old mansion during an exclusive masquerade ball.
 
----
+Guests arrive expecting an elegant celebration.
 
-## ⚠️ Project Status
+Music plays.
 
-This project was developed during my **first game jam**.
+People dance.
 
-I worked as the **only programmer/developer** on the team, while also contributing to game design decisions and gameplay structure.
+Nobody suspects anything.
 
-Due to the limited 48-hour timeframe, the planned scope, and this being my first jam experience, the project **was not completed as a final playable version within the deadline**.
+The protagonist briefly leaves the ballroom to use the bathroom.
 
-Even so, the jam was an important experience in:
+Moments later...
 
-- Teamwork
-- Rapid prototyping
-- Scope definition
-- Development under time pressure
-- Task organization
-- Gameplay concept creation
-- Unity project planning
+The music stops.
 
-This repository preserves the project as a **game jam prototype/concept** and as a foundation for a possible future polished remake.
+Screams echo through the mansion.
+
+When the protagonist returns, vampires have begun massacring the guests.
+
+The player must explore the mansion, uncover what happened, avoid becoming the next victim and ultimately survive until sunrise or escape the estate alive.
 
 ---
 
-## 👥 Team
+🎮 Gameplay
 
-Project developed by:
+The game is being redesigned around a first-person stealth experience.
 
-- **Anderson Gonçalves** — Programmer & Game Designer
-- **Ana Paula** — Art / Design
-- **João Pedro** — Art / Design
-- **Eduarda** — Art / Design
-- **Dayane Noleto** — Art / Design
+Core gameplay loop:
 
-> Note: Anderson Gonçalves was the only person responsible for programming and implementation during the jam.
+1. Explore the mansion
+2. Search for keys and resources
+3. Find new masks
+4. Blend in with vampires
+5. Avoid suspicion
+6. Hide when necessary
+7. Unlock new areas
+8. Escape or survive until dawn
 
 ---
 
-## 🛠️ Technologies and Tools
+🎭 Mask System
 
-### Development
+Masks are the central mechanic of the game.
 
-- **Unity**
-- **C#**
+Different masks allow the player to temporarily disguise themselves among vampires.
 
-### Additional tools
+However:
 
-- Aseprite
+- Masks deteriorate over time.
+- Some vampires are harder to fool.
+- Suspicious behavior increases detection.
+- Broken masks immediately expose the player.
+
+Choosing when to wear or preserve a mask becomes one of the main strategic decisions.
+
+---
+
+👁️ Enemy AI
+
+The vampires are designed around perception rather than scripted encounters.
+
+Planned AI systems include:
+
+- Patrol behaviors
+- Field of view detection
+- Line-of-sight checks
+- Suspicion system
+- Investigation behavior
+- Chase state
+- Search state
+- Memory of last known player position
+
+Enemy behavior is intended to become one of the project's main technical showcases.
+
+---
+
+🏰 Exploration
+
+Players will gradually unlock the mansion while searching for:
+
+- Keys
+- Masks
+- Documents
+- Hidden passages
+- Survival resources
+
+The environment itself tells the story through exploration instead of long cutscenes.
+
+---
+
+🧩 Planned Features
+
+Gameplay
+
+- First-person movement
+- Interaction system
+- Inventory
+- Mask durability
+- Suspicion mechanic
+- Hiding spots
+- Locked doors
+- Keys
+- Environmental puzzles
+- Final escape sequence
+
+AI
+
+- Patrol
+- Investigation
+- Chase
+- Search
+- Perception
+- State Machine
+- Memory
+
+Environment
+
+- Explorable mansion
+- Multiple floors
+- Secret rooms
+- Interactive props
+- Atmospheric lighting
+
+---
+
+🎨 Artistic Direction
+
+The original 2D side-scroller has been replaced by a retro Doom-like / 2.5D presentation.
+
+Visual direction:
+
+- Retro FPS perspective
+- Pixel-art inspired rendering
+- Low-resolution presentation
+- Billboard enemies
+- Directional sprites
+- Low-poly 3D environments
+- Stylized lighting
+- Atmospheric fog
+- Retro horror aesthetic
+
+The goal is to capture the feeling of classic 90s shooters while focusing on stealth rather than combat.
+
+---
+
+🖥️ Resolution and Visual Presentation
+
+The project targets a fixed low-resolution rendering style to reinforce its retro identity.
+
+Planned specifications:
+
+- Internal Resolution: 320×180 (primary target)
+- Alternative Resolution: 426×240
+- Aspect Ratio: 16:9
+- Integer pixel scaling
+- Pixel-perfect presentation
+- Low-resolution rendering with modern lighting
+- Designed for PC with potential WebGL support
+
+The game window will scale to modern displays while preserving the original pixel density.
+
+---
+
+⚙️ Technical Direction
+
+Current implementation focuses on modular gameplay systems.
+
+Planned architecture:
+
+- First Person Controller
+- Player Interaction System
+- Inventory System
+- Mask System
+- Vampire AI
+- Suspicion System
+- Save System
+- Dialogue Trigger System
+- Environmental Events
+- Scene Manager
+
+Characters will primarily use billboard sprites with directional animation.
+
+Large props and architecture will use simple low-poly 3D models to improve depth perception and reduce visual artifacts.
+
+---
+
+🛠️ Technologies
+
+Engine
+
+- Unity
+
+Programming
+
+- C#
+
+Art
+
 - Blender
+- Aseprite
+
+Audio
+
 - FMOD
+- BeepBox
+
+Documentation
+
+- Notion
+- Trello
 - Canva
-- BeepBox — https://www.beepbox.co/
 
 ---
 
-## 🎮 Planned Controls
+🎮 Planned Controls
 
-| Action | Key |
-|------|------|
-| Movement | WASD / Arrow Keys |
-| Interact | E |
-| Use / switch mask | Q |
-| Jump | Space |
-
-> Some controls may not be fully implemented in the jam version.
+Action| Key
+Move| WASD
+Look Around| Mouse
+Interact| E
+Use / Change Mask| Q
+Sprint| Left Shift
+Crouch| Left Ctrl
+Pause| Esc
 
 ---
 
-## 🔗 Important Links
+👥 Credits
 
-Project documentation and organization:
+Original Global Game Jam Team
 
-- 📄 **GDD — Game Design Document**  
-https://www.notion.so/Modelo-Game-Design-Document-GDD-2f3e7aeb5ebf802e9f67de17ad16b96d?source=copy_link
+- Anderson Gonçalves — Programming & Game Design
+- Ana Paula — Art & Design
+- João Pedro — Art & Design
+- Eduarda — Art & Design
+- Dayane Noleto — Art & Design
 
-- 🎨 **Moodboard**  
+During the game jam, Anderson was solely responsible for all programming and gameplay implementation.
+
+---
+
+👤 Current Development
+
+Since the end of Global Game Jam 2026, the project has become an independent solo remake.
+
+Current responsibilities:
+
+- Programming
+- Gameplay
+- Game Design
+- Technical Design
+- AI Systems
+- Architecture
+- Implementation
+
+by Anderson Gonçalves
+
+---
+
+📈 Current Status
+
+Current development stage:
+
+- Original jam prototype preserved
+- Gameplay redesign in progress
+- Artistic direction redefined
+- AI systems under development
+- Environment redesign
+- First playable prototype in progress
+
+---
+
+📸 Media
+
+The repository will be updated with:
+
+- Gameplay screenshots
+- Development GIFs
+- AI demonstrations
+- Prototype videos
+- Future playable builds
+
+---
+
+🚀 Running the Project
+
+Clone the repository:
+
+git clone https://github.com/AndersonGACFilho/Vampires--Don-t--bite-me.git
+
+Open the project using Unity Hub.
+
+Select the correct Unity version.
+
+Open the main scene.
+
+Press Play.
+
+---
+
+🔗 Project Links
+
+Game Design Document
+
+https://www.notion.so/Modelo-Game-Design-Document-GDD-2f3e7aeb5ebf802e9f67de17ad16b96d
+
+Moodboard
+
 https://www.canva.com/design/DAG_c6LGVcg/xwptMcac3JszZ9BqyNh9vg/edit
 
-- 📋 **Trello — Task Management**  
+Trello
+
 https://trello.com/invite/b/69767438a75ab1358604a2ac/ATTI3a92b1e4424a68ca56f1d045ba90d96cE1C3F458/global-game-jam-mascaras
 
-- 📝 **General Notes Document**  
-https://docs.google.com/document/d/1gSsfs96pag5IdlHf_3TUngOn9RLWpy8zHs_kwGrAUrE/edit
+Development Notes
 
-- 🖼️ **Canva — Visual Materials / Stickers**  
-https://www.canva.com/design/DAG_eBDvh-c/2XgKlmOOL1S2hl2IlMm5pA/edit
-
-- 🎥 **References and Research Materials**  
-https://www.canva.com/design/DAG_eBDvh-c/2XgKlmOOL1S2hl2IlMm5pA/edit?utm_content=DAG_eBDvh-c
+https://docs.google.com/document/d/1gSsfs96pag5IdlHf_3TUngOn9RLWpy8zHs_kwGrAUrE
 
 ---
 
-## 🚀 How to Run
+🔮 Roadmap
 
-1. Clone the repository:
+Planned milestones:
 
-```bash
-git clone https://github.com/AndersonGACFilho/Vampires--Don-t--bite-me.git
-````
-
-2. Open the project using **Unity Hub**.
-
-3. Select the correct Unity version used by the project.
-
-4. Open the main scene.
-
-5. Click **Play** in the Unity Editor.
-
----
-
-## 📦 Build
-
-The jam version was not finalized as a complete playable build.
-
-A playable build link will be added here if a future version becomes available.
+- Playable mansion prototype
+- Mask system
+- Suspicion system
+- Vampire AI
+- Inventory
+- Exploration mechanics
+- Environmental storytelling
+- Final chase sequence
+- Public demo
+- Steam/Itch.io release candidate
 
 ---
 
-## 📸 Screenshots / GIFs
+❤️ Acknowledgements
 
-Screenshots and GIFs from the prototype may be added later.
+Special thanks to:
 
----
+- Global Game Jam
+- Coletivo Centopeia
+- The original jam team
+- Everyone who participated in GGJ 2026
 
-## 🧠 Development Process
-
-During Global Game Jam 2026, the project involved:
-
-* Group brainstorming
-* Core concept definition
-* Moodboard creation
-* Task organization using Trello
-* Initial Unity prototyping
-* Discussion of mechanics based on the theme
-* Planning for art, audio and gameplay
-* Attempted implementation of the core gameplay loop within 48 hours
-
-This experience highlighted the importance of scope control, feature prioritization and fast gameplay validation in game jam projects.
+Without the original jam, this project would never have existed.
 
 ---
 
-## 🎨 Creative Challenge
+📜 License
 
-As part of the jam experience, each team member created a personal sticker representing their identity.
+Originally created during Global Game Jam 2026.
 
-This exercise helped connect the **Mask** theme with ideas of personal expression, appearance and visual identity.
+The repository now serves as the official home of the ongoing solo remake.
 
----
-
-## 🔮 Future of the Project
-
-The original idea may be revisited in the future as a post-jam remake or polished version, focused on:
-
-* Stronger 2D gameplay
-* Functional mask system
-* Reactive enemy behavior
-* Simple inventory system
-* Explorable mansion
-* Clear win and lose conditions
-* Better visual and audio feedback
-* Playable public build
-
----
-
-## ❤️ Acknowledgements
-
-Thanks to:
-
-* Global Game Jam
-* Local organization at Coletivo Centopeia
-* Workshop facilitators
-* All jam participants
-* The team members for the creative process and collaboration
-
----
-
-## 📜 License
-
-Project created for educational, creative and experimental purposes during **Global Game Jam 2026**.
-
-This repository represents a learning prototype and a record of the development process.
+This project is intended for educational, experimental and portfolio purposes.
